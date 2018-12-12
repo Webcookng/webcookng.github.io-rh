@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>i Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  
+<div class="app-wrapper" ng-app="InvoiceGenerator">
+  <div class="container" ng-controller="InvoiceGeneratorCtrl">
+    <div class="row">
+      <div class="col-12">
+        <button class="btn btn-primary" ng-click="togglePreviewMode()">Preview mode: {{ previewMode }}</button>
+        <h1>Invoice generator  </h1>
+        <div class="invoice">
+          <fieldset ng-disabled="previewMode">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <h2>Invoice</h2>
+                  <hr/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-5">
+                  <input class="form-control form-control-sm" type="text" ng-model="fromCompany" placeholder="From company"/>
+                  <textarea class="form-control form-control-sm" type="text" ng-model="fromAddress" placeholder="From address"></textarea>
+                  <input class="form-control form-control-sm" type="text" ng-model="toCompany" placeholder="To company"/>
+                  <textarea class="form-control form-control-sm" type="text" ng-model="toAddress" placeholder="To address"></textarea>
+                </div>
+                <div class="col-7">
+                  <dl class="row">
+                    <dt class="col-4">Reference</dt>
+                    <dd class="col-8"> 
+                      <input class="form-control form-control-sm" type="text" ng-model="reference"/>
+                    </dd>
+                    <dt class="col-4">Date</dt>
+                    <dd class="col-8"> 
+                      <input class="form-control form-control-sm" type="date" value="{{ dateSent }}" ng-model="dateSent"/>
+                    </dd>
+                    <dt class="col-4">Due</dt>
+                    <dd class="col-8"> 
+                      <input class="form-control form-control-sm" type="date" ng-model="dateDue"/>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody class="table_body">
+                      <tr ng-repeat="product in products track by $index">
+                        <td> 
+                          <input class="form-control form-control-sm" type="text" ng-model="product.description" placeholder="Product description"/>
+                        </td>
+                        <td>
+                          <input class="form-control form-control-sm" type="number" ng-model="product.quantity" ng-change="productPriceChange(product)"/>
+                        </td>
+                        <td>
+                          <input class="form-control form-control-sm" type="number" ng-model="product.price" ng-change="productPriceChange(product)"/>
+                        </td>
+                        <td>&pound;{{ product.amount }}</td>
+                        <td> 
+                          <button class="btn btn-danger" ng-click="removeProduct(product)"><i class="fa fa-times">       </i></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="5"> 
+                          <button class="btn btn-success" ng-click="addBlankProduct()"><i class="fa fa-plus">   </i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <dl class="row">
+                    <dt class="col-2 offset-8">Subtotal</dt>
+                    <dd class="col-2">&pound;{{ subtotal }}</dd>
+                    <dt class="col-2 offset-8">Tax (20%)</dt>
+                    <dd class="col-2">&pound;{{ tax }}</dd>
+                    <dt class="col-2 offset-8">Total</dt>
+                    <dd class="col-2">&pound;{{ total }}</dd>
+                  </dl>
+                  <hr/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <h5>Notes</h5>
+                  <textarea class="form-control form-control-sm" type="text" ng-model="notes"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <h5>Terms</h5>
+                  <textarea class="form-control form-control-sm" type="text" ng-model="terms"></textarea>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js'></script>
+<script src='https://use.fontawesome.com/e97101b1b8.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+p {
+  white-space: pre;
+}
+
+.invoice {
+  padding: 40px;
+  border: 1px solid #efefef;
+  box-shadow: 5px 5px 10px #ccc;
+}
+
+fieldset:disabled {
+  
+  input,
+  textarea {
+    padding: 0;
+    border: none;
+    background-color: transparent !important;
+    cursor: auto !important;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  button {
+    display: none;
+  }
+}

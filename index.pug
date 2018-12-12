@@ -1,0 +1,74 @@
+.app-wrapper(ng-app="InvoiceGenerator")
+  .container(ng-controller="InvoiceGeneratorCtrl")
+    .row
+      .col-12
+        button(class="btn btn-primary", ng-click="togglePreviewMode()") Preview mode: {{ previewMode }}
+        h1 Invoice generator  
+        .invoice
+          fieldset(ng-disabled="previewMode")
+            .container
+              .row
+                .col-12
+                  h2 Invoice
+                  hr
+              .row
+                .col-5
+                  input.form-control.form-control-sm(type="text", ng-model="fromCompany", placeholder="From company")
+                  textarea.form-control.form-control-sm(type="text", ng-model="fromAddress", placeholder="From address")
+                  input.form-control.form-control-sm(type="text", ng-model="toCompany", placeholder="To company")
+                  textarea.form-control.form-control-sm(type="text", ng-model="toAddress", placeholder="To address")
+                .col-7
+                  dl.row
+                    dt.col-4 Reference
+                    dd.col-8 
+                      input.form-control.form-control-sm(type="text", ng-model="reference")
+                    dt.col-4 Date
+                    dd.col-8 
+                      input.form-control.form-control-sm(type="date", value="{{ dateSent }}", ng-model="dateSent")
+                    dt.col-4 Due
+                    dd.col-8 
+                      input.form-control.form-control-sm(type="date", ng-model="dateDue")                      
+              .row
+                .col-12
+                  table.table
+                    thead
+                      tr
+                        th Item
+                        th Quantity
+                        th Price
+                        th Amount
+                        th
+                    tbody.table_body
+                      tr(ng-repeat="product in products track by $index")
+                        td 
+                          input.form-control.form-control-sm(type="text", ng-model="product.description", placeholder="Product description")
+                        td
+                          input.form-control.form-control-sm(type="number", ng-model="product.quantity", ng-change="productPriceChange(product)")
+                        td
+                          input.form-control.form-control-sm(type="number", ng-model="product.price", ng-change="productPriceChange(product)")
+                        td &pound;{{ product.amount }}
+                        td 
+                          button.btn.btn-danger(ng-click="removeProduct(product)")
+                            i.fa.fa-times        
+                      tr
+                        td(colspan="5") 
+                          button.btn.btn-success(ng-click="addBlankProduct()")
+                            i.fa.fa-plus    
+                  dl.row
+                    dt.col-2.offset-8 Subtotal
+                    dd.col-2 &pound;{{ subtotal }}
+                    dt.col-2.offset-8 Tax (20%)
+                    dd.col-2 &pound;{{ tax }}
+                    dt.col-2.offset-8 Total
+                    dd.col-2 &pound;{{ total }}
+                  hr
+              .row
+                .col-12
+                  h5 Notes
+                  textarea.form-control.form-control-sm(type="text", ng-model="notes")
+              .row
+                .col-12
+                  h5 Terms
+                  textarea.form-control.form-control-sm(type="text", ng-model="terms")
+
+
