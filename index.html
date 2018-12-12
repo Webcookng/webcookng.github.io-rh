@@ -3,10 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>i Generator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invoice Generator</title>
   
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+  
+  <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+<link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
 
       <link rel="stylesheet" href="css/style.css">
 
@@ -15,113 +16,78 @@
 
 <body>
 
-  
-<div class="app-wrapper" ng-app="InvoiceGenerator">
-  <div class="container" ng-controller="InvoiceGeneratorCtrl">
-    <div class="row">
-      <div class="col-12">
-        <button class="btn btn-primary" ng-click="togglePreviewMode()">Preview mode: {{ previewMode }}</button>
-        <h1>Invoice generator  </h1>
-        <div class="invoice">
-          <fieldset ng-disabled="previewMode">
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <h2>Invoice</h2>
-                  <hr/>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-5">
-                  <input class="form-control form-control-sm" type="text" ng-model="fromCompany" placeholder="From company"/>
-                  <textarea class="form-control form-control-sm" type="text" ng-model="fromAddress" placeholder="From address"></textarea>
-                  <input class="form-control form-control-sm" type="text" ng-model="toCompany" placeholder="To company"/>
-                  <textarea class="form-control form-control-sm" type="text" ng-model="toAddress" placeholder="To address"></textarea>
-                </div>
-                <div class="col-7">
-                  <dl class="row">
-                    <dt class="col-4">Reference</dt>
-                    <dd class="col-8"> 
-                      <input class="form-control form-control-sm" type="text" ng-model="reference"/>
-                    </dd>
-                    <dt class="col-4">Date</dt>
-                    <dd class="col-8"> 
-                      <input class="form-control form-control-sm" type="date" value="{{ dateSent }}" ng-model="dateSent"/>
-                    </dd>
-                    <dt class="col-4">Due</dt>
-                    <dd class="col-8"> 
-                      <input class="form-control form-control-sm" type="date" ng-model="dateDue"/>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Item</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Amount</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody class="table_body">
-                      <tr ng-repeat="product in products track by $index">
-                        <td> 
-                          <input class="form-control form-control-sm" type="text" ng-model="product.description" placeholder="Product description"/>
-                        </td>
-                        <td>
-                          <input class="form-control form-control-sm" type="number" ng-model="product.quantity" ng-change="productPriceChange(product)"/>
-                        </td>
-                        <td>
-                          <input class="form-control form-control-sm" type="number" ng-model="product.price" ng-change="productPriceChange(product)"/>
-                        </td>
-                        <td>&pound;{{ product.amount }}</td>
-                        <td> 
-                          <button class="btn btn-danger" ng-click="removeProduct(product)"><i class="fa fa-times">       </i></button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="5"> 
-                          <button class="btn btn-success" ng-click="addBlankProduct()"><i class="fa fa-plus">   </i></button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <dl class="row">
-                    <dt class="col-2 offset-8">Subtotal</dt>
-                    <dd class="col-2">&pound;{{ subtotal }}</dd>
-                    <dt class="col-2 offset-8">Tax (20%)</dt>
-                    <dd class="col-2">&pound;{{ tax }}</dd>
-                    <dt class="col-2 offset-8">Total</dt>
-                    <dd class="col-2">&pound;{{ total }}</dd>
-                  </dl>
-                  <hr/>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <h5>Notes</h5>
-                  <textarea class="form-control form-control-sm" type="text" ng-model="notes"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                  <h5>Terms</h5>
-                  <textarea class="form-control form-control-sm" type="text" ng-model="terms"></textarea>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-      </div>
-    </div>
+  <header>
+  <h1>Invoice</h1> 
+  <address contenteditable>
+    <p>Jonathan Neal</p>
+    <p>101 E. Chapman Ave<br>Orange, CA 92866</p>
+    <p>(800) 555-1234</p>
+  </address>
+  <span><img alt="" src="http://www.jonathantneal.com/examples/invoice/logo.png"><input type="file" accept="image/*"></span>
+</header>
+<article>
+  <h1>Recipient</h1>
+  <address contenteditable>
+    <p>Some Company<br>c/o Some Guy</p>
+  </address>
+  <table class="meta">
+    <tr>
+      <th><span contenteditable>Invoice #</span></th>
+      <td><span contenteditable>101138</span></td>
+    </tr>
+    <tr>
+      <th><span contenteditable>Date</span></th>
+      <td><span contenteditable>January 1, 2012</span></td>
+    </tr>
+    <tr>
+      <th><span contenteditable>Amount Due</span></th>
+      <td><span id="prefix" contenteditable>$</span><span>600.00</span></td>
+    </tr>
+  </table>
+  <table class="inventory">
+    <thead>
+      <tr>
+        <th><span contenteditable>Item</span></th>
+        <th><span contenteditable>Description</span></th>
+        <th><span contenteditable>Rate</span></th>
+        <th><span contenteditable>Quantity</span></th>
+        <th><span contenteditable>Price</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="cut">-</a><span contenteditable>Front End Consultation</span></td>
+        <td><span contenteditable>Experience Review</span></td>
+        <td><span data-prefix>$</span><span contenteditable>150.00</span></td>
+        <td><span contenteditable>4</span></td>
+        <td><span data-prefix>$</span><span>600.00</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="add">+</a>
+  <table class="balance">
+    <tr>
+      <th><span contenteditable>Total</span></th>
+      <td><span data-prefix>$</span><span>600.00</span></td>
+    </tr>
+    <tr>
+      <th><span contenteditable>Amount Paid</span></th>
+      <td><span data-prefix>$</span><span contenteditable>0.00</span></td>
+    </tr>
+    <tr>
+      <th><span contenteditable>Balance Due</span></th>
+      <td><span data-prefix>$</span><span>600.00</span></td>
+    </tr>
+  </table>
+</article>
+<aside>
+  <h1><span contenteditable>Additional Notes</span></h1>
+  <div contenteditable>
+    <p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
   </div>
-</div>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js'></script>
-<script src='https://use.fontawesome.com/e97101b1b8.js'></script>
+</aside>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
 
   
 

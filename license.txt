@@ -1,10 +1,9 @@
 
 
 <!--
-Copyright (c) 2018 by Dele Oyawola (https://codepen.io/Ola-dee/pen/maeRYR)
+Copyright (c) 2018 by Dele Oyawola (https://codepen.io/Ola-dee/pen/pqjRwa)
 
 
-Fork of an original work by Joe Taylor (https://codepen.io/JTLR/pen/mWZrge)
 
 
 
